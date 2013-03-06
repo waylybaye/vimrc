@@ -26,6 +26,7 @@ Bundle 'pythoncomplete'
 
 " Other
 Bundle 'Puppet-Syntax-Highlighting'
+Bundle 'ZenCoding.vim'
 
 
 syntax on
