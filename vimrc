@@ -152,7 +152,7 @@ let mapleader=","
 " enable gitgutter hightlight changed lines
 let g:gitgutter_highlight_lines = 1
 
-let g:EasyMotion_leader_key = '<Leader>'
+let g:EasyMotion_leader_key = '<Leader><Leader>'
 
 set laststatus=2
 
@@ -160,3 +160,4 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*pyc     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+map <D-/> <Leader>c<space>
