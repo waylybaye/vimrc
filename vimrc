@@ -26,8 +26,15 @@ Bundle 'honza/snipmate-snippets'
 Bundle 'tpope/vim-fugitive'
 " shows git diff in the gutter (sign column)
 Bundle 'airblade/vim-gitgutter'
+
+""" Vim improvement
 " Ctrl-P
 Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-powerline'
+
+" Program
+Bundle 'scrooloose/nerdcommenter'
 
 " Python
 Bundle 'klen/python-mode'
@@ -37,7 +44,10 @@ Bundle 'pythoncomplete'
 
 " Other
 Bundle 'Puppet-Syntax-Highlighting'
+
+" HTML
 Bundle 'ZenCoding.vim'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 Bundle 'flazz/vim-colorschemes'
 
@@ -123,8 +133,8 @@ if has("gui")
     "set background=light
     set guioptions-=T
     set hlsearch
-    set lines=45
-    set columns=100
+    " set lines=45
+    " set columns=100
 endif
 
 
@@ -136,3 +146,17 @@ colorscheme molokai
 "colo ir_black
 "colo ir_black
 "map <C-P> :FufFile
+
+let mapleader=","
+
+" enable gitgutter hightlight changed lines
+let g:gitgutter_highlight_lines = 1
+
+let g:EasyMotion_leader_key = '<Leader>'
+
+set laststatus=2
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*pyc     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
