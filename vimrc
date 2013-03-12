@@ -32,6 +32,10 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'tpope/vim-surround'
+
+" visualize vim undo tree
+Bundle 'Gundo'
 
 " Program
 Bundle 'scrooloose/nerdcommenter'
@@ -161,3 +165,9 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe  " Windows
 
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 map <D-/> <Leader>c<space>
+
+nnoremap <F5> :GundoToggle<CR>
+
+inoremap <leader>, <C-X><C-o>
+inoremap <leader>: <C-X><C-f>
+inoremap <leader>= <C-X><C-l>
