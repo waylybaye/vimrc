@@ -14,6 +14,30 @@ Bundle 'vimwiki'
 " neocompcache
 "Bundle 'Shougo/neocomplcache'
 
+""" Vim improvement
+" Ctrl-P
+Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'tpope/vim-surround'
+
+Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
+
+" visualize vim undo tree
+Bundle 'Gundo'
+
+" Program
+Bundle 'scrooloose/nerdcommenter'
+" Bundle 'AutoClose'
+Bundle 'Townk/vim-autoclose'
+
+" git
+Bundle 'tpope/vim-fugitive'
+" shows git diff in the gutter (sign column)
+Bundle 'airblade/vim-gitgutter'
+
+
 " snipMate
 " deps
 Bundle "MarcWeber/vim-addon-mw-utils"
@@ -22,29 +46,23 @@ Bundle "tomtom/tlib_vim"
 Bundle 'garbas/vim-snipmate'
 Bundle 'honza/snipmate-snippets'
 
-" git
-Bundle 'tpope/vim-fugitive'
-" shows git diff in the gutter (sign column)
-Bundle 'airblade/vim-gitgutter'
-
-""" Vim improvement
-" Ctrl-P
-Bundle 'kien/ctrlp.vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'tpope/vim-surround'
-
-" visualize vim undo tree
-Bundle 'Gundo'
-
-" Program
-Bundle 'scrooloose/nerdcommenter'
-
 " Python
 Bundle 'klen/python-mode'
 Bundle 'python.vim'
 Bundle 'python_match.vim'
 Bundle 'pythoncomplete'
+
+" Javascript
+Bundle 'leshill/vim-json'
+Bundle 'groenewege/vim-less'
+Bundle 'pangloss/vim-javascript'
+Bundle 'briancollins/vim-jst'
+Bundle 'kchmck/vim-coffee-script'
+
+" SASS, SCSS, html, haml
+Bundle 'amirh/HTML-AutoCloseTag'
+Bundle 'hail2u/vim-css3-syntax'
+Bundle 'tpope/vim-haml'
 
 " Other
 Bundle 'Puppet-Syntax-Highlighting'
@@ -59,7 +77,8 @@ Bundle 'flazz/vim-colorschemes'
 syntax on
 
 set backspace=indent,eol,start  " Backspace for dummies
-set linespace=0                 " No extra spaces between rows
+"set linespace=0                 " No extra spaces between rows
+set linespace=3
 set nu                          " Line numbers on
 set showmatch                   " Show matching brackets/parenthesis
 set incsearch                   " Find as you type search
@@ -93,8 +112,25 @@ set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
 autocmd FileType c,cpp,java,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 
+" Strip whitespace {
+function! StripTrailingWhitespace()
+    " To disable the stripping of whitespace, add the following to your
+    " .vimrc.local file:
+    "   let g:spf13_keep_trailing_whitespace = 1
+    if !exists('g:spf13_keep_trailing_whitespace')
+        " Preparation: save last search, and cursor position.
+        let _s=@/
+        let l = line(".")
+        let c = col(".")
+        " do the business:
+        %s/\s\+$//e
+        " clean up: restore previous search history, and cursor position
+        let @/=_s
+        call cursor(l, c)
+    endif
+endfunction
 " }
-"
+
 colo slate
 
 map <c-a> ggVG
@@ -119,8 +155,8 @@ let g:vimwiki_list = [{'path': '~/Dropbox/note',
 \   'html_footer': '~/Dropbox/note/html/footer.tpl'}]
 let g:vimwiki_camel_case = 0
 
-"filetype on
-filetype plugin on
+filetype on
+filetype plugin indent on
 
 "set foldmethod=indent
 "set foldlevel=100
@@ -154,7 +190,7 @@ colorscheme molokai
 let mapleader=","
 
 " enable gitgutter hightlight changed lines
-let g:gitgutter_highlight_lines = 1
+"let g:gitgutter_highlight_lines = 1
 
 let g:EasyMotion_leader_key = '<Leader><Leader>'
 
@@ -168,6 +204,19 @@ map <D-/> <Leader>c<space>
 
 nnoremap <F5> :GundoToggle<CR>
 
-inoremap <leader>, <C-X><C-o>
-inoremap <leader>: <C-X><C-f>
-inoremap <leader>= <C-X><C-l>
+inoremap <leader>o <C-X><C-o>
+inoremap <leader>f <C-X><C-f>
+inoremap <leader>n <C-X><C-n>
+inoremap <leader>l <C-X><C-l>
+
+" dont' clear cache on exist
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
+
+"open file in new tab
+let g:ctrlp_prompt_mappings = {
+  \ 'AcceptSelection("e")': [],
+  \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
+  \ }
+
+autocmd FileType html,htmldjango,css,less,javascript setlocal shiftwidth=2 softtabstop=2 expandtab
