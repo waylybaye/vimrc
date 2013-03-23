@@ -5,19 +5,20 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-"Bundle 'L9'
-"Bundle 'FuzzyFinder'
+
+" molokai color scheme
 Bundle 'molokai'
 
+" Your personal wiki !
 Bundle 'vimwiki'
 
-" neocompcache
-"Bundle 'Shougo/neocomplcache'
+""" Vim iMproved
 
-""" Vim improvement
-" Ctrl-P
+" Ctrl-P, Just like Sublime Text 2 Command-P Goto Anything
 Bundle 'kien/ctrlp.vim'
+" 快速移动插件
 Bundle 'Lokaltog/vim-easymotion'
+" 让 vim 状态栏酷起来！
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'tpope/vim-surround'
 
@@ -27,9 +28,10 @@ Bundle 'jistr/vim-nerdtree-tabs'
 " visualize vim undo tree
 Bundle 'Gundo'
 
-" Program
+
+""" Programing Plugins
+
 Bundle 'scrooloose/nerdcommenter'
-" Bundle 'AutoClose'
 Bundle 'Townk/vim-autoclose'
 
 " git
@@ -74,11 +76,12 @@ Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'flazz/vim-colorschemes'
 
 
+filetype plugin indent on
 syntax on
 
 set backspace=indent,eol,start  " Backspace for dummies
 "set linespace=0                 " No extra spaces between rows
-set linespace=3
+set linespace=2
 set nu                          " Line numbers on
 set showmatch                   " Show matching brackets/parenthesis
 set incsearch                   " Find as you type search
@@ -152,11 +155,10 @@ let g:vimwiki_use_mouse = 1
 let g:vimwiki_list = [{'path': '~/Dropbox/note',
 \   'path_html': '~/Dropbox/note/html',
 \   'html_header': '~/Dropbox/note/html/header.tpl',
-\   'html_footer': '~/Dropbox/note/html/footer.tpl'}]
+\   'html_footer': '~/Dropbox/note/html/footer.tpl',
+\}, {'path': '~/Dropbox/Apps/solog', 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_camel_case = 0
 
-filetype on
-filetype plugin indent on
 
 "set foldmethod=indent
 "set foldlevel=100
@@ -220,3 +222,6 @@ let g:ctrlp_prompt_mappings = {
   \ }
 
 autocmd FileType html,htmldjango,css,less,javascript setlocal shiftwidth=2 softtabstop=2 expandtab
+
+let NERDTreeShowBookmarks=1
+let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
