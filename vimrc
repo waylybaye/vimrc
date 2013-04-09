@@ -40,7 +40,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
 
 
-" snipMate
+""" snipMate
 " deps
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -75,7 +75,6 @@ Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 Bundle 'flazz/vim-colorschemes'
 
-
 filetype plugin indent on
 syntax on
 
@@ -102,7 +101,7 @@ set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 
 " Formatting {
 
-set nowrap                      " Wrap long lines
+"set nowrap                      " Wrap long lines
 set autoindent                  " Indent at the same level of the previous line
 set shiftwidth=4                " Use indents of 4 spaces
 set expandtab                   " Tabs are spaces, not tabs
@@ -185,6 +184,7 @@ endif
 ":hi! htmlLink gui=NONE
 let html_no_rendering=1
 colorscheme molokai
+colo inkpot
 "colo ir_black
 "colo ir_black
 "map <C-P> :FufFile
@@ -221,7 +221,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
   \ }
 
-autocmd FileType html,htmldjango,css,less,javascript setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType html,htmldjango,css,less,javascript,coffee,yaml,ruby setlocal shiftwidth=2 softtabstop=2 expandtab
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
