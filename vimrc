@@ -18,8 +18,11 @@ Bundle 'vimwiki'
 Bundle 'kien/ctrlp.vim'
 " 快速移动插件
 Bundle 'Lokaltog/vim-easymotion'
+
 " 让 vim 状态栏酷起来！
-Bundle 'Lokaltog/vim-powerline'
+"Bundle 'Lokaltog/vim-powerline'
+"Bundle 'Lokaltog/powerline-fonts'
+Bundle 'bling/vim-airline'
 Bundle 'tpope/vim-surround'
 
 Bundle 'scrooloose/nerdtree'
@@ -68,6 +71,12 @@ Bundle 'tpope/vim-haml'
 
 " Other
 Bundle 'Puppet-Syntax-Highlighting'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'Yggdroot/indentLine'
+Bundle "Valloric/YouCompleteMe"
+Bundle "vim-scripts/matchit.zip"
+Bundle "godlygeek/tabular"
+Bundle 'terryma/vim-multiple-cursors'
 
 " HTML
 Bundle 'ZenCoding.vim'
@@ -133,7 +142,6 @@ function! StripTrailingWhitespace()
 endfunction
 " }
 
-colo slate
 
 map <c-a> ggVG
 map <C-j> <C-W>j
@@ -166,7 +174,9 @@ set directory=~/tmp,/tmp
 
 map <leader>tt <Plug>VimwikiToggleListItem
 
-set guifont=Monaco:h12
+"set guifont=Monaco:h12
+set guifont=Menlo:h12
+set linespace=5
 
 if has("gui")
     set guioptions-=L
@@ -183,11 +193,12 @@ endif
 
 ":hi! htmlLink gui=NONE
 let html_no_rendering=1
-colorscheme molokai
-colo inkpot
+"colorscheme molokai
 "colo ir_black
 "colo ir_black
 "map <C-P> :FufFile
+colo xcode-dusk
+colo solarized
 
 let mapleader=","
 
@@ -225,3 +236,85 @@ autocmd FileType html,htmldjango,css,less,javascript,coffee,yaml,ruby setlocal s
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+
+function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
+  let ft=toupper(a:filetype)
+  let group='textGroup'.ft
+  if exists('b:current_syntax')
+    let s:current_syntax=b:current_syntax
+    " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
+    " do nothing if b:current_syntax is defined.
+    unlet b:current_syntax
+  endif
+  execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
+  try
+    execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
+  catch
+  endtry
+  if exists('s:current_syntax')
+    let b:current_syntax=s:current_syntax
+  else
+    unlet b:current_syntax
+  endif
+  execute 'syntax region textSnip'.ft.'
+  \ matchgroup='.a:textSnipHl.'
+  \ start="'.a:start.'" end="'.a:end.'"
+  \ contains=@'.group
+endfunction
+
+au FileType md,vimwiki,markdown call TextEnableCodeSnip('sh', '```sh', '```', 'SpecialComment')
+au FileType vimwiki,markdown,mkd call TextEnableCodeSnip('python', '```python', '```', 'SpecialComment')
+au FileType vimwiki,markdown,mk call TextEnableCodeSnip('ruby', '```ruby', '```', 'SpecialComment')
+
+set foldlevel=3
+
+" airline options
+let g:airline_powerline_fonts=0
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_linecolumn_prefix = '␊ '
+let g:airline_linecolumn_prefix = '␤ '
+let g:airline_linecolumn_prefix = '¶ '
+let g:airline_fugitive_prefix = '⎇ '
+let g:airline_paste_symbol = 'ρ'
+let g:airline_paste_symbol = 'Þ'
+let g:airline_paste_symbol = '∥'
+
+" rainbow parentheses options
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" end rainbow parentheses options
+
+" Start tabular options
+let mapleader=','
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
+" End tabular options
